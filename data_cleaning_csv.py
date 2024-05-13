@@ -4,19 +4,17 @@ df  = pd.read_csv('titanic.csv')
 print(df.head())
 
 df["Title"] = df["Name"].apply(lambda x: x.split(",")[1].split(".")[0].strip()) #Dealing with 'Name' attribute
-print(df["Title"].value_counts())
+# print(df["Title"].value_counts())
 
-df["Title"].replace(["Dr","Col","Rev","Ms","Dona"],"Other",inplace=True)
-print(df["Title"].value_counts())
+df["Title"] = df["Title"].replace(["Dr","Col","Rev","Ms","Dona"],"Other")
+# print(df["Title"].value_counts())
 
 df['Age'] = df['Age'].clip(lower=1) #Dealing with 'Age' attribute, by converting it into int and filling NaN values with fillna.
 df['Age'] = df['Age'].fillna(df['Age'].median())
 df['Age'] = df['Age'].astype(int)
-df["Age"] == "NaN"
+print(df["Age"].isna())
 
-print(df["Age"] == "NaN")    
-
-print(df['Fare'].fillna(df['Fare'].median(),inplace=True)) #Dealing with 'Fare' attribute by filling its NaN values with median value.
+print(df['Fare'].fillna(df['Fare'].median())) #Dealing with 'Fare' attribute by filling its NaN values with median value.
 
 df['Cabin'].dropna().str.isalnum().sum() #Dealing with 'Cabin' attribute by droping and filling NaN values with mode.
 mode = df["Cabin"].mode()[0]
